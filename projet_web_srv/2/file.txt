@@ -1,0 +1,3 @@
+Pour le Flag n°2, j’ai testé une vulnérabilité de Path Traversal dans le paramètre page. Le site chargeait des pages en fonction de la valeur donnée, sans vérifier ce qui était envoyé. En ajoutant des ../ dans l’URL, j’ai réussi à remonter dans l’arborescence du serveur et à accéder au fichier /etc/passwd. Lorsqu’il a été chargé, le site a affiché le flag associé.
+
+Pour éviter ce type d’attaque, le serveur doit valider strictement les paramètres reçus. Il faut empêcher toute utilisation de ../ dans les chemins, imposer une liste blanche des pages autorisées, et utiliser des fonctions sécurisées pour gérer les fichiers. Une bonne configuration serveur et une validation côté backend empêchent complètement ce type d'accès non autorisé.

@@ -1,0 +1,3 @@
+Pour le Flag n°3, j’ai exploité une redirection non sécurisée dans les liens du site. Les boutons de réseaux sociaux utilisaient un paramètre site= qui redirigeait l’utilisateur vers n’importe quelle adresse, sans aucune vérification. En modifiant manuellement ce paramètre et en y mettant un lien externe, j’ai déclenché une redirection contrôlée et le serveur m’a affiché le flag.
+
+Pour éviter ce problème, il faut valider les URLs de redirection, par exemple en utilisant une liste blanche des domaines autorisés. Le serveur doit aussi refuser toute URL externe ou suspecte. Une vérification côté backend suffit à bloquer ce type d’attaque.

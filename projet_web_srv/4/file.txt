@@ -1,0 +1,11 @@
+Pour ce flag, j’ai analysé le dossier caché /.hidden, indiqué dans le fichier robots.txt. En l’explorant, j’ai découvert qu’il contenait une très grande quantité de sous-dossiers aux noms aléatoires. Chaque dossier renferme un fichier README en français, généralement inutile. J’ai donc parcouru ces répertoires jusqu’à tomber sur un dossier contenant un README différent, dans lequel se trouvait un message indiquant explicitement : “Hey, here is your flag” suivi du hash correspondant au Flag n°14. Cette vulnérabilité repose sur le fait que des fichiers et dossiers sensibles sont laissés accessibles dans l’arborescence du serveur, ce qui permet à un attaquant de faire de l’exploration manuelle ou au moyen d’un outil d’automatisation pour récupérer des informations non destinées au public.
+
+Pour corriger ce problème, il faut empêcher l’accès direct à ces répertoires. Le serveur ne devrait jamais exposer des dossiers internes ou des fichiers contenant des informations sensibles. Les mesures à mettre en place sont :
+
+Supprimer ou déplacer tout dossier interne en dehors du répertoire web public.
+
+Configurer correctement l’indexation : désactiver l’option “autoindex” dans Apache ou Nginx pour éviter la navigation dans les répertoires.
+
+Filtrer l’accès avec des règles de configuration (deny all) sur les dossiers sensibles.
+
+Vérifier régulièrement l’arborescence avec des outils d’analyse (gobuster, dirb, feroxbuster) pour s’assurer que rien de confidentiel n’est exposé.

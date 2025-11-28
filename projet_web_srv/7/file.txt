@@ -1,0 +1,23 @@
+En inspectant les requêtes du site, j’ai remarqué qu’un cookie appelé I_am_admin était envoyé automatiquement par le serveur. Son contenu ressemblait à un hash MD5. J’ai copié la valeur du cookie et je l’ai soumise à un outil de déchiffrement MD5 : le résultat était le mot "false".
+Cela voulait dire que le site déterminait si l’utilisateur était administrateur uniquement à partir de la valeur de ce cookie, et qu’il utilisait un simple MD5 pour encoder la valeur.
+
+À partir de là, j’ai testé la logique inverse : j’ai pris le mot "true", je l’ai passé dans un générateur MD5, puis j’ai remplacé la valeur du cookie par ce nouveau hash. Après avoir renvoyé la requête modifiée, le serveur m’a considéré comme administrateur et a immédiatement affiché le flag.
+
+Pour corriger ce problème, il faut absolument arrêter de baser l’authentification sur un cookie simple et modifiable.
+Les bonnes pratiques sont :
+
+✔️ 1. Ne jamais stocker un rôle (admin/user) modifiable dans un cookie
+
+Le cookie doit contenir un identifiant de session, pas un rôle.
+
+✔️ 2. Utiliser des sessions sécurisées côté serveur
+
+PHP, Python, Node… tous utilisent des sessions stockées côté serveur à l’abri.
+
+✔️ 3. Ne pas utiliser MD5
+
+C’est un hash trop faible et cassable en quelques millisecondes.
+
+✔️ 4. Utiliser des tokens sécurisés (JWT avec signature ou sessions cryptées)
+
+Les données ne doivent pas être modifiables par l’utilisateur.
